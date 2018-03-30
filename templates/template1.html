@@ -1,0 +1,37 @@
+<head>
+<title>My Test Webpage</title>
+<link rel="stylesheet" type="text/css" href="static/styles/style.css">
+</head>
+<body>
+<h1>{{listName}}</h1>
+<p><b>{{testvar}}</b></p>
+<div class=listItems>
+{% for row in shoppingList %}
+	<ul>
+		<!--<li><b>{{row.username}}</b></p></li>-->	
+		<li>{{row.item}}</p>
+		<form name="Delete" class="Form" action="/" method="post">
+			<input type=submit value="Delete">
+			<input type=hidden name="Action" value="Delete">
+			<input type=hidden name="Id" value={{row.itemid}}>
+		</form>
+
+		<form name="Edit" class="Form" action="/" method="post">
+			<input type=submit value="Edit">
+			<input type=hidden name="Action" value="Edit">
+			<input type=hidden name="Id" value={{row.itemid}}>
+		</form>
+		
+		</form>	
+		</li>
+	</ul>
+{% endfor %}
+</div>
+<div class=addItems>
+<h2>Add Item:</h2>
+<form name="addItem" class="Form" action="/" method="post">
+	<input type=text name="itemToAdd" placeholder="Item Name" pattern="[A-Za-z']{1,15}" title="Please enter a valid item Name">
+</form>
+</div>
+
+</body>
