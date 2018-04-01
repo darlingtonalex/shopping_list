@@ -1,36 +1,73 @@
 <head>
 <title>My Test Webpage</title>
 <link rel="stylesheet" type="text/css" href="static/styles/style.css">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 </head>
 <body>
+<meta name="google-signin-client_id" content="636315963559-b722dpdmu6p0km8vjtgumrppbom5se9h.apps.googleusercontent.com">
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
 <h1>{{listName}}</h1>
 <p><b>{{testvar}}</b></p>
 <div class=listItems>
-{% for row in shoppingList %}
 	<ul>
-		<!--<li><b>{{row.username}}</b></p></li>-->	
+{% for row in shoppingList %}	
 		<li>{{row.item}}</p>
 		<form name="Delete" class="Form" action="/" method="post">
 			<input type=submit value="Delete">
 			<input type=hidden name="Action" value="Delete">
 			<input type=hidden name="Id" value={{row.itemid}}>
 		</form>
-
+		{% if edititem == (-1) or edititem != row.itemid %}
 		<form name="Edit" class="Form" action="/" method="post">
 			<input type=submit value="Edit">
 			<input type=hidden name="Action" value="Edit">
 			<input type=hidden name="Id" value={{row.itemid}}>
 		</form>
-		
-		</form>	
+		{% else %}
+		<form name="Update" class="Form" action="/" method="post">
+			<input type=text name="EditItem" value={{row.item}}>
+			<input type=hidden name="Action" value="Update">
+			<input type=hidden name="Id" value={{row.itemid}}>
+			<input type=submit value="Update">
+ 
+		</form>
+
+		{% endif %}
+			
 		</li>
-	</ul>
+	
+
 {% endfor %}
+	</ul>
+ <a href="#" onclick="signOut();">Sign out</a>
+	<script>
+	function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+        document.cookie="session_token=";
+        window.location="/login.html";
+        });
+        }
+        </script>
+      
+
+
 </div>
 <div class=addItems>
 <h2>Add Item:</h2>
 <form name="addItem" class="Form" action="/" method="post">
-	<input type=text name="itemToAdd" placeholder="Item Name" pattern="[A-Za-z']{1,15}" title="Please enter a valid item Name">
+	<input type=text name="itemToAdd" placeholder="Item Name" pattern="[A-Za-z ']{1,15}" title="Please enter a valid item Name">
+	<input type=submit value="Add">
+	<input type=hidden name="Action" value="Add">
+</form>
+
+<form name="deleteAll" class="Form" action="/" method="post">
+        <input type=submit value="Delete All">
+        <input type=hidden name="Action" value="deleteAll">
+
 </form>
 </div>
 
