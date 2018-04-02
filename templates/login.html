@@ -3,23 +3,24 @@
 <title>My Test Webpage</title>
 <link rel="stylesheet" href="/static/styles/bootstrap/dist/css/bootstrap.min.css">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-
+<!--Bootstrap for styling and google login scripts -->
 </head>
 <body>
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Shopping List Webapp</a>
     </div>
+<!-- Navigation bar - just a title in this case -->
 <br>
 <div class="container">
 <meta name="google-signin-client_id" content="636315963559-b722dpdmu6p0km8vjtgumrppbom5se9h.apps.googleusercontent.com">
+<!-- Metadata - google client_id (authorises google login) -->
 <h1>Login Page</h1>
 <br>
 <h5>Click the Google Sign in button to Sign in! </h5>
 <br>
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-<!--<a href="#" onclick="signOut();">Sign out</a>-->
+<!-- Google signin button. Uses below javascript -->
 
 <script>
   function signOut() {
@@ -40,6 +41,7 @@
         }
         xhr.send('idtoken=' + id_token)
 }
+<!-- js for signing in -->
 
 </script>
 </div>		

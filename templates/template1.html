@@ -5,10 +5,12 @@
 <title>Shopping List</title>
 
 <link rel="stylesheet" href="/static/styles/bootstrap/dist/css/bootstrap.min.css">
-
+<!--Using boostrap as my stylesheet-->
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<!--Required javascript for the google authentication (logout in this case) to work correctly.
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Ensures that my page is adaptave to different screen sizes-->
 <meta charset="utf-8"> 
 </head>
 <body>
@@ -30,6 +32,7 @@
         });
         }
         </script>
+	<!-- Page Navigation Bar ^ -->
     </ul>
   </div>
 </nav>
@@ -37,34 +40,45 @@
 <meta name="google-signin-client_id" content="636315963559-b722dpdmu6p0km8vjtgumrppbom5se9h.apps.googleusercontent.com">
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 </div>
+<!-- The google signin button required for the signout button to work. I have hidden this using bootstrap as logging in should take place on the login page -->
 <div class="container">
 <h1>Hello {{userName}}!</h1>
+<!-- Using jinja2 to display a greeting to the user including their name based on their google account -->
 </div>
 <br>
 <div class="container">
 <h4>Your Shopping List:</h4>
 <br>
+<!-- I have formatted my shopping list as an unordered list, styled using bootrstrap -->
 	<ul class="list-group">
 {% for row in shoppingList %}	
 		<div class="center-block">
 		<li class="list-group-item "><h5>{{row.item}}</h5>
+		<!--Displays the content for each row in the shopping list-->
+
 		<form name="Delete" class="Form" action="/" method="post">
 			<input type=submit value="Delete">
 			<input type=hidden name="Action" value="Delete">
 			<input type=hidden name="Id" value={{row.itemid}}>
 		</form>
+		<!-- Posts a delete request for the relevant item -->
+
 		{% if edititem == (-1) or edititem != row.itemid %}
+		<!-- This checks if the user has chosen to edit a given item. If not, edititem is automatically set to -1 (see python -->
 		<form name="Edit" class="Form" action="/" method="post">
 			<input type=submit value="Edit">
 			<input type=hidden name="Action" value="Edit">
 			<input type=hidden name="Id" value={{row.itemid}}>
 		</form>
+		<!-- This first "Edit" form posts the id of the item that the user wishes to edit -->
 		{% else %}
 		<form name="Update" class="Form" action="/" method="post">
 			<input type=text name="EditItem" value="{{row.item}}">
 			<input type=hidden name="Action" value="Update">
 			<input type=hidden name="Id" value={{row.itemid}}>
 			<input type=submit value="Update">
+		<!-- This is the follow up to the "Edit" form and is only shown once the edit button has been pressed (previous form has been submitted) -->
+		<!-- It posts the value in the text input box (as well as the id) to trigger the "Update" function in the python -->
  
 		</form>
 
@@ -83,12 +97,14 @@
 	<input type=text name="itemToAdd" placeholder="Item Name" pattern="[A-Za-z ']{1,15}" title="Please enter a valid item Name">
 	<input type=submit value="Add">
 	<input type=hidden name="Action" value="Add">
+<!-- Posts the value in the text input box to trigger the add function in the python -->
 </form>
 </div>
 <div class=deleteAll>
 <form name="deleteAll" class="Form" action="/" method="post">
         <input type=submit value="Delete All">
         <input type=hidden name="Action" value="deleteAll">
+<!-- Posts "Delete All" to trigger the delete all function in the python -->
 </form>
 </div>
 </div>
