@@ -1,19 +1,53 @@
-<head>
-<title>My Test Webpage</title>
-<link rel="stylesheet" type="text/css" href="static/styles/style.css">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<title>Shopping List</title>
+
+<link rel="stylesheet" href="/static/styles/bootstrap/dist/css/bootstrap.min.css">
+
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"> 
 </head>
 <body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Shopping List Webapp</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      	<li> <a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+	<script>
+        function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+        console.log('User signed out.');
+        document.cookie="session_token=";
+        window.location="/login.html";
+        });
+        }
+        </script>
+    </ul>
+  </div>
+</nav>
+<div class="d-none">
 <meta name="google-signin-client_id" content="636315963559-b722dpdmu6p0km8vjtgumrppbom5se9h.apps.googleusercontent.com">
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-<h1>{{listName}}</h1>
-<p><b>{{testvar}}</b></p>
-<div class=listItems>
-	<ul>
+</div>
+<div class="container">
+<h1>Hello {{userName}}!</h1>
+</div>
+<br>
+<div class="container">
+<h4>Your Shopping List:</h4>
+<br>
+	<ul class="list-group">
 {% for row in shoppingList %}	
-		<li>{{row.item}}</p>
+		<div class="center-block">
+		<li class="list-group-item "><h5>{{row.item}}</h5>
 		<form name="Delete" class="Form" action="/" method="post">
 			<input type=submit value="Delete">
 			<input type=hidden name="Action" value="Delete">
@@ -27,35 +61,22 @@
 		</form>
 		{% else %}
 		<form name="Update" class="Form" action="/" method="post">
-			<input type=text name="EditItem" value={{row.item}}>
+			<input type=text name="EditItem" value="{{row.item}}">
 			<input type=hidden name="Action" value="Update">
 			<input type=hidden name="Id" value={{row.itemid}}>
 			<input type=submit value="Update">
  
 		</form>
 
-		{% endif %}
-			
+		{% endif %}	
 		</li>
-	
+		</div>
 
 {% endfor %}
 	</ul>
- <a href="#" onclick="signOut();">Sign out</a>
-	<script>
-	function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-        console.log('User signed out.');
-        document.cookie="session_token=";
-        window.location="/login.html";
-        });
-        }
-        </script>
-      
+<br>
 
-
-</div>
+<div class=containter>
 <div class=addItems>
 <h2>Add Item:</h2>
 <form name="addItem" class="Form" action="/" method="post">
@@ -63,12 +84,17 @@
 	<input type=submit value="Add">
 	<input type=hidden name="Action" value="Add">
 </form>
-
+</div>
+<div class=deleteAll>
 <form name="deleteAll" class="Form" action="/" method="post">
         <input type=submit value="Delete All">
         <input type=hidden name="Action" value="deleteAll">
-
 </form>
 </div>
-
+</div>
+</div>
+</div>
+</div>
+<br>
+<br>
 </body>

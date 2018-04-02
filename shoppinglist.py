@@ -58,11 +58,9 @@ def main():
     	if not authorised:
         	return "<p>Access Denied</p><a href=\"/login.html\">Try again</a>"
 
-    	varList=[ userid,username ]
-#	userid = uint(userid)
+    	varList=[ userid,username]
 	print userid
-	testvar = "abcd123"
-	listName = "Default List Name"
+	userName = str(username)
 	edititem = -1
 	print request
 	if request.method=='POST':
@@ -94,4 +92,4 @@ def main():
 	time.sleep(0.2)
 	shoppingList = shoppingaslist(getallitemsforuser(userid))
 	print shoppingList
-	return render_template("template1.html", testvar=testvar, shoppingList = shoppingList, listName=listName, edititem=edititem, varList=varList)
+	return render_template("template1.html", shoppingList = shoppingList, userName=userName, edititem=edititem, varList=varList)
